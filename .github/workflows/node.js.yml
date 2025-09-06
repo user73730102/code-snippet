@@ -102,7 +102,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Update README with Python
+      - name: Update README with State-Aware Python
         env:
           TEST_SERVER_RESULT: ${{ needs.test-server.result }}
           TEST_CLIENT_RESULT: ${{ needs.test-client.result }}
@@ -113,21 +113,22 @@ jobs:
           import os, re
           with open('README.md', 'r') as f: content = f.read()
 
-          # Update Test Server (C)
-          if os.environ.get('TEST_SERVER_RESULT') == 'success': content = re.sub(r'class C default', 'class C success', content)
-          else: content = re.sub(r'class C default', 'class C failure', content)
+          # Define the pattern that matches any of our states
+          state_pattern = r'(default|success|failure|skipped)'
 
-          # Update Test Client (D)
-          if os.environ.get('TEST_CLIENT_RESULT') == 'success': content = re.sub(r'class D default', 'class D success', content)
-          else: content = re.sub(r'class D default', 'class D failure', content)
+          # Function to perform the replacement
+          def update_status(node_id, result):
+              global content
+              new_state = result if result in ['success', 'failure', 'skipped'] else 'failure'
+              pattern = fr'class {node_id} {state_pattern}'
+              replacement = f'class {node_id} {new_state}'
+              content = re.sub(pattern, replacement, content)
 
-          # Update Build Images (E)
-          if os.environ.get('BUILD_IMAGES_RESULT') == 'success': content = re.sub(r'class E default', 'class E success', content)
-          elif os.environ.get('BUILD_IMAGES_RESULT') in ['failure', 'cancelled']: content = re.sub(r'class E default', 'class E failure', content)
-
-          # Update Deploy (F)
-          if os.environ.get('DEPLOY_RESULT') == 'success': content = re.sub(r'class F default', 'class F success', content)
-          elif os.environ.get('DEPLOY_RESULT') in ['failure', 'cancelled']: content = re.sub(r'class F default', 'class F failure', content)
+          # Update each node
+          update_status('C', os.environ.get('TEST_SERVER_RESULT', 'failure'))
+          update_status('D', os.environ.get('TEST_CLIENT_RESULT', 'failure'))
+          update_status('E', os.environ.get('BUILD_IMAGES_RESULT', 'skipped'))
+          update_status('F', os.environ.get('DEPLOY_RESULT', 'skipped'))
 
           with open('README.md', 'w') as f: f.write(content)
           "
