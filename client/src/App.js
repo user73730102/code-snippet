@@ -19,7 +19,7 @@ function App() {
         return <Login setToken={setToken} />;
     }
 
-    return <Dashboard token={token} setToken={setToken} ;
+    return <Dashboard token={token} setToken={setToken} />;
 }
 
 export default App;
