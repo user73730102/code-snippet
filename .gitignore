@@ -1,0 +1,19 @@
+# Dependencies
+**/node_modules/
+git-filter-repo
+
+# Environment variables
+server\.env
+**/.env
+
+
+# Build folder
+dist/
+build/
+
+# Log files
+*.log
+
+# Mac and Windows junk files
+.DS_Store
+Thumbs.db
