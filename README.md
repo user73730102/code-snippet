@@ -35,9 +35,9 @@ graph TD
     %% Apply default styles to each node individually
     class A default;
     class B default;
-    class C failure;
-    class D failure;
-    class E skipped;
-    class F skipped;
+    class C success;
+    class D success;
+    class E success;
+    class F success;
     class G default;
 ```
