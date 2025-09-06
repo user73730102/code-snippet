@@ -2,7 +2,7 @@
 
 ### CI/CD Pipeline Status
 
-[![CI/CD Pipeline](https://github.com/user73730102/pastebin/actions/workflows/node.js.yml/badge.svg)](https://github.com/user73730102/pastebin/actions/workflows/node.js.yml)
+[![CI/CD Pipeline with Docker](https://github.com/user73730102/code-snippet/actions/workflows/node.js.yml/badge.svg)](https://github.com/user73730102/code-snippet/actions/workflows/node.js.yml)
 
 This badge shows the real-time status of the last run on the `main` branch.
 
