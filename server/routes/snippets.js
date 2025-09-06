@@ -15,7 +15,7 @@ const User = require('../models/User');
 router.delete('/:id', auth, async (req, res) => {
     try {
         // Find the snippet by its ID
-        let snippet = await Snippet.findById(req.params.id);
+        let snippe = await Snippet.findById(req.params.id);
 
         if (!snippet) {
             return res.status(404).json({ msg: 'Snippet not found' });
