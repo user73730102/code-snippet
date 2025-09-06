@@ -1,6 +1,6 @@
 require('dotenv').config();
-const express = );
-const mongoose = require('mongoose');
+const express = require('express');
+const mongoose = ');
 const cors = require('cors');
 const Sentry = require('@sentry/node'); // Import the main object
 
