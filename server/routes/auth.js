@@ -17,7 +17,7 @@ router.post('/login', async (req, res) => {
     try {
         let user = await User.findOne({ uniqueCode });
 
-        // If user doesn't exist, create a new one
+        // If user doesn't exist, create a new on
         if (!user) {
             user = new User({ uniqueCode });
             await user.save();
