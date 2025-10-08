@@ -19,7 +19,9 @@ RUN npm run build
 FROM nginx:stable-alpine
 COPY --from=builder /app/build /usr/share/nginx/html
 
-# The lines for entrypoint.sh have been REMOVED. This is correct.
+# THIS LINE MUST EXIST AND POINT TO THE CORRECT FILE
+COPY nginx/entrypoint.sh /docker-entrypoint.d/10-generate-config.sh
+RUN chmod +x /docker-entrypoint.d/10-generate-config.sh
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

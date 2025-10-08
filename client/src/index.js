@@ -5,18 +5,24 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './axiosConfig';
-Sentry.init({
-  dsn: process.env.REACT_APP_SENTRY_DSN, // Paste your React project DSN
-  integrations: [
-    Sentry.browserTracingIntegration(),
-    Sentry.replayIntegration(),
-  ],
-  // Performance Monitoring
-  tracesSampleRate: 1.0, 
-  // Session Replay
-  replaysSessionSampleRate: 0.1, 
-  replaysOnErrorSampleRate: 1.0, 
-});
+
+if (window.runtimeConfig && window.runtimeConfig.SENTRY_DSN) {
+  Sentry.init({
+    dsn: window.runtimeConfig.SENTRY_DSN, // <-- CRUCIAL: Reads from window object
+    integrations: [
+      Sentry.browserTracingIntegration(),
+      Sentry.replayIntegration(),
+    ],
+    // Performance Monitoring
+    tracesSampleRate: 1.0, 
+    // Session Replay
+    replaysSessionSampleRate: 0.1, 
+    replaysOnErrorSampleRate: 1.0, 
+  });
+  console.log("Sentry initialized for client."); // <-- Add this for debugging
+} else {
+  console.log("Sentry DSN not found. Sentry not initialized."); // <-- Add this for debugging
+}
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

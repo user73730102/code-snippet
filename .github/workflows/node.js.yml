@@ -79,8 +79,10 @@ jobs:
           file: ./client/Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository }}/client:latest
+          no-cache: true
           build-args: |
             REACT_APP_API_URL=${{ secrets.RENDER_SERVER_URL }}
+            SENTRY_DSN=${{secrets.SENTRY_DSN}}
 
   # --- JOB TO DEPLOY TO RENDER ---
   deploy:
