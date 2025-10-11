@@ -37,7 +37,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions-rust-lang/setup-rust-toolchain@v1
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
@@ -115,23 +114,26 @@ jobs:
           import os, re
           with open('README.md', 'r') as f: content = f.read()
 
-          # Define the pattern that matches any of our states
-          state_pattern = r'(default|success|failure|skipped)'
+          # Define the pattern that matches any of our possible states
+          state_pattern = r'(default|success|failure|skipped|running)'
 
-          # Function to perform the replacement
+          # A robust function to perform the replacement
           def update_status(node_id, result):
               global content
-              new_state = result if result in ['success', 'failure', 'skipped'] else 'failure'
+              # Default to 'failure' if the result is unexpected
+              new_state = result if result in ['success', 'failure', 'skipped', 'running'] else 'failure'
+              # Build a dynamic regex to find the current state of a specific node
               pattern = fr'class {node_id} {state_pattern}'
               replacement = f'class {node_id} {new_state}'
+              # Perform the replacement
               content = re.sub(pattern, replacement, content)
 
-          # Update each node
+          # Update each node using the function
           update_status('C', os.environ.get('TEST_SERVER_RESULT', 'failure'))
           update_status('D', os.environ.get('TEST_CLIENT_RESULT', 'failure'))
           update_status('E', os.environ.get('BUILD_IMAGES_RESULT', 'skipped'))
           update_status('F', os.environ.get('DEPLOY_RESULT', 'skipped'))
-
+          
           with open('README.md', 'w') as f: f.write(content)
           "
       - name: Commit and Push updated README
