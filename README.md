@@ -36,8 +36,8 @@ graph TD
     class A default;
     class B default;
     class C success;
-    class D failure;
-    class E skipped;
-    class F skipped;
+    class D success;
+    class E success;
+    class F success;
     class G default;
 ```
