@@ -1,5 +1,8 @@
 # My DevOps Project Dashboard
 
+Check out the **[Live Demo](https://client-docker.onrender.com/)**.
+> **Note:** The server is hosted on a free tier, so it may take ~30 seconds to load initially while it spins up.
+
 ### CI/CD Pipeline Status
 
 [![CI/CD Pipeline with Docker](https://github.com/user73730102/code-snippet/actions/workflows/node.js.yml/badge.svg)](https://github.com/user73730102/code-snippet/actions/workflows/node.js.yml)
